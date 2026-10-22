@@ -130,3 +130,38 @@ O menu lateral com o logo Financer passa a ter um botão permanente na própria 
 - Dados JSON versionados em UTF-8/Base64URL no fragmento #sim=; sem backend, banco ou serviço externo. Renda e gastos estão legíveis ao destinatário; o diálogo informa isso. Não altera as permissões de hospedagem.
 - Na abertura, o cenário validado do link tem prioridade sobre o armazenamento local. Cenário recebido não sobrescreve o cenário local automaticamente; Salvar cópia/Salvar parâmetros confirma a substituição e remove o fragmento. Edições não modificam o link original.
 - Links inválidos ou incompatíveis mostram aviso e preservam o cenário local. Limite de 24.000 caracteres codificados; cenários grandes usam exportação JSON existente. O endereço preserva domínio, subdiretório e query do deploy.
+
+
+## Revisão de fidelidade financeira — 21/10/2026
+Esta seção substitui as premissas históricas de ausência de TR/IPCA mencionadas anteriormente.
+
+### Correção monetária e juros
+- Seletor: sem correção, TR ou IPCA. Não há valor futuro oficial presumido. Cenários antigos mantêm sem correção até configuração explícita.
+- Hipótese anual de correção convertida em taxa mensal composta: c = (1 + correção anual/100)^(1/12) - 1. Overrides mês;taxa mensal % substituem essa hipótese em meses específicos. Índices informados manualmente não são baixados nem chamados de índices oficiais.
+- Antes do pagamento: correção = saldo anterior × c; saldo atualizado = saldo anterior + correção; juros = saldo atualizado × taxa mensal remuneratória.
+- Taxa efetiva anual: i = (1 + taxa anual/100)^(1/12) - 1. Taxa nominal anual: i = taxa anual/1200. CET não deve ser usado no campo de juros.
+- A quota SAC ou prestação financeira Price é atualizada pelo mesmo fator mensal. Após extra com redução de prestação, recalcula-se a quota/prestação com o saldo e prazo remanescente. Com redução de prazo, preserva-se a quota/prestação financeira de referência, sujeita ao indexador.
+- Extras fixos são aplicados após a prestação regular e limitados ao saldo atualizado restante. Correção integra o principal a liquidar, não é somada de novo ao desembolso.
+- Identidades verificadas: saldo inicial + correção - amortização - extra = saldo final; total pago = principal inicial + correção acumulada + juros + encargos.
+- TR não negativa; IPCA mensal pode ser negativo. Valores calculados com precisão de ponto flutuante e apresentados em centavos; diferenças de arredondamento bancário são possíveis.
+
+### Seguro e orçamento
+- Seguro fixo informado, ou MIP mensal sobre saldo atualizado + DFI mensal informado. Taxa de MIP deve vir da apólice; para renda composta, informar a taxa ponderada. Tarifa mensal adicionada uma única vez.
+- Sem inferência de taxas por idade nem reajuste etário automático. Sem cronograma de seguradora, o modelo não reproduz reenquadramentos futuros. DFI e tarifa são constantes.
+- Recomendações usam a primeira prestação e orçamento constantes como ponto de partida; o alerta testa todas as prestações projetadas, incluindo efeitos do indexador. A sugestão que exceder a renda em qualquer mês exibe aviso explícito. A espera para formar reserva é estimada pelo gasto e prestação inicial.
+- Reservas mensais para aportes periódicos continuam sendo valor do aporte / frequência; primeiro extra ao término do ciclo. Não há rendimento da reserva.
+
+### Apresentação e compartilhamento
+- Gráfico compara juros + correção, juros isolados ou total desembolsado. A escala de saldo não corta aumentos devidos à correção.
+- Tabela de variações mostra juros + correção e discrimina a correção. Cronograma mensal e CSV mostram correção e saldo atualizado.
+- Novos parâmetros persistem em JSON, links de compartilhamento e salvamento local.
+
+### Limites da projeção
+- Modelo de contrato em amortização, com períodos mensais regulares e pagamento pontual. Não inclui fase de obras, carência, juros pro rata die, defasagem particular de IPCA, alteração futura de taxa remuneratória, subsídios, FGTS, taxas por dia de aniversário, atrasos ou regras de recálculo específicas de cada contrato.
+- A correção efetiva futura é desconhecida. Uma hipótese constante não é previsão. Para aproximar a cobrança, preencher indexador, taxa nominal/efetiva e seguros da proposta, bem como índices mensais aplicáveis ao contrato. A contratação ou extrato do banco prevalece.
+
+### Referências primárias
+- CAIXA — perguntas frequentes novos financiamentos: https://www.caixa.gov.br/voce/habitacao/perguntas-frequentes-novos-financiamentos/Paginas/default.aspx
+- CAIXA — Cartilha de juros na fase de obras (referência da ordem de atualização, não simulação de obras): https://www.caixa.gov.br/Downloads/habitacao-documentos-gerais/Cartilha_Juros_Fase_de_Obras.pdf
+- CAIXA — formulário cliente habitação, seguros: https://www.caixa.gov.br/voce/habitacao/Documents/formulario-cliente-habitacao-digital.pdf
+- SUSEP — seguro habitacional: https://www.gov.br/susep/pt-br/assuntos/meu-futuro-seguro/seguros-previdencia-e-capitalizacao/seguros/seguro-habitacional
