@@ -165,3 +165,11 @@ Esta seção substitui as premissas históricas de ausência de TR/IPCA menciona
 - CAIXA — Cartilha de juros na fase de obras (referência da ordem de atualização, não simulação de obras): https://www.caixa.gov.br/Downloads/habitacao-documentos-gerais/Cartilha_Juros_Fase_de_Obras.pdf
 - CAIXA — formulário cliente habitação, seguros: https://www.caixa.gov.br/voce/habitacao/Documents/formulario-cliente-habitacao-digital.pdf
 - SUSEP — seguro habitacional: https://www.gov.br/susep/pt-br/assuntos/meu-futuro-seguro/seguros-previdencia-e-capitalizacao/seguros/seguro-habitacional
+
+
+### Terceiro gráfico — parcelas mensais
+- Gráfico ECharts na largura completa abaixo dos dois gráficos existentes, comparando Sem extras e todas as variações confirmadas com as mesmas cores e títulos.
+- Padrão: parcela mensal = amortização regular + juros + seguro + tarifa; incorpora os efeitos do indexador sobre saldo e prestação, sem somar correção novamente. Aporte extra excluído da parcela.
+- Alternativa Prestação + aporte mostra o desembolso de cada mês, incluindo picos semestrais e anuais, sem acumular os valores de meses anteriores.
+- Após a quitação: zero. No ponto inicial, sem parcela antes do mês 1. Não suavizar as linhas mensais, para preservar os saltos e picos.
+- Legenda, zoom e consulta temporal sincronizados com os outros dois gráficos. Confirmações, edições e remoções recalculam as três visualizações.

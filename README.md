@@ -42,12 +42,12 @@ Parâmetros de financiamento, documentação e comparações são salvos no nave
 - `SPEC.md`: especificação e histórico de revisões, atual na versão 3.1.
 - `src/finance.mjs`: SAC/Price, documentação, validação e migração.
 - `src/planner.mjs`: análise de orçamento, recomendações e projeções.
-- `src/Planner.jsx`: formulários recolhíveis de variações e dois gráficos sincronizados.
+- `src/Planner.jsx`: formulários recolhíveis de variações e três gráficos sincronizados.
 - `src/EChart.jsx` e `src/chart-options.mjs`: integração React/ECharts, responsividade e opções de projeção.
 - `src/variation-form.mjs`: confirmação de rascunhos e tratamento de títulos/CSV.
 - `src/app.jsx`: navegação, parâmetros, visão geral e evolução mensal.
 - `src/style.css`: layout responsivo e tipografia.
-- `tests/`: 94 testes financeiros, de projeção e de confirmação de variações.
+- `tests/`: 98 testes financeiros, de projeção e de confirmação de variações.
 
 ## Hipóteses
 
@@ -60,3 +60,5 @@ Navegação e parâmetros podem ser expandidos/recolhidos por botões com estado
 Configure em Correção e regras do contrato o indexador, a hipótese anual (ou índices mensais), tipo da taxa e seguro da proposta. A correção é aplicada ao saldo antes dos juros e da amortização. O gráfico discrimina juros + correção; o cronograma e CSV mostram o valor da atualização. Nenhum valor futuro de TR/IPCA é presumido: cenários antigos continuam sem correção até você configurá-la.
 
 Fatores de aniversário, pro rata diário, fase de obras, defasagem de índices, reenquadramentos etários e regras particulares exigem dados do contrato e podem divergir da projeção. Consulte SPEC.md.
+
+O terceiro gráfico compara as parcelas mensais do contrato sem extras e das variações confirmadas. Alterne Só prestação / Prestação + aporte para distinguir a parcela regular do desembolso do mês.

@@ -58,7 +58,7 @@ export function directAdvice(p,a=budgetAnalysis(p)){
  return {capacity,possible,start:a.start,plan,immediate};
 }
 export function projectionValues(result,horizon){
- let interest=0,correction=0,total=0;const values=[{month:0,balance:result.principal,interest:0,correction:0,cost:0,total:0}];
- for(let month=1;month<=horizon;month++){const row=result.rows[month-1];if(row){interest+=row.interest;correction+=row.correction??0;total+=row.total;}values.push({month,balance:row?.balance??0,interest,correction,cost:interest+correction,total});}
+ let interest=0,correction=0,total=0;const values=[{month:0,balance:result.principal,interest:0,correction:0,cost:0,total:0,payment:null,monthlyTotal:null}];
+ for(let month=1;month<=horizon;month++){const row=result.rows[month-1];if(row){interest+=row.interest;correction+=row.correction??0;total+=row.total;}values.push({month,balance:row?.balance??0,interest,correction,cost:interest+correction,total,payment:row?.payment??0,monthlyTotal:row?.total??0});}
  return values;
 }
